@@ -2,17 +2,18 @@
     <div>
       <div>
         <h2>Vue Js Search and Add Marker</h2>
-        <p>lat : <span>{{JSON.stringify(center)}}</span></p>
+        <p>coor : <span>{{JSON.stringify(center)}}</span></p>
         <label>
-          <GmapAutocomplete 
+          <!-- <GmapAutocomplete 
             @place_changed="initMarker"
-          />
+          /> -->
           <!-- <button @click="addLocationMarker">Add</button> -->
         </label>
         <br/>
 
-        <textarea v-model="place"/>
-        {{place}}
+        <textarea v-model="place" />
+        <br>
+        <!-- {{place}} -->
         <button @click="searchLocation">
             search
         </button>
@@ -81,6 +82,15 @@
                 console.log(results[0].geometry.location.lat());
                 console.log(results[0].geometry.location.lng());
                 console.log('/////////////////////////////');
+
+                const marker = {
+                    lat: results[0].geometry.location.lat(),
+                    lng: results[0].geometry.location.lng()
+                };
+
+                this.locationMarkers= [{ position: marker }];
+                this.center = marker;
+
                 }else{
                     console.log('gagal');
                 }
@@ -108,8 +118,8 @@
             lng: loc.geometry.location.lng()
           };
           this.locationMarkers.push({ position: marker });
-          this.locPlaces.push(loc);
           this.center = marker;
+          this.locPlaces.push(loc);
         }
       },
       updateCoordinates(location) {
